@@ -1,0 +1,119 @@
+{
+	"info": {
+		"_postman_id": "d1b3298e-ff25-4758-a001-e86838e3770b",
+		"name": "Petstore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28091226"
+	},
+	"item": [
+		{
+			"name": "GET by petID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:3000/pet/10",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"pet",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Update pet info by petID",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\n    \"id\": 10,\n    \"name\": \"doggie2\",\n    \"category\": {\n      \"id\": 1,\n      \"name\": \"Dogs\"\n    },\n    \"photoUrls\": [\"string\"],\n    \"tags\": [\n      {\n        \"id\": 0,\n        \"name\": \"string\"\n      },\n      {\n        \"id\": 1,\n        \"name\": \"test\"\n      }\n    ],\n    \"status\": \"sold\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:3000/pet/10",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"pet",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST add a new pet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\n    \"id\": 12,\n    \"name\": \"doggie2\",\n    \"category\": {\n      \"id\": 1,\n      \"name\": \"Dogs\"\n    },\n    \"photoUrls\": [\"string\"],\n    \"tags\": [\n      {\n        \"id\": 0,\n        \"name\": \"string\"\n      },\n      {\n        \"id\": 1,\n        \"name\": \"test\"\n      }\n    ],\n    \"status\": \"sold\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:3000/pet",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE a pet by petID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\n    \"id\": 10,\n    \"name\": \"doggie2\",\n    \"category\": {\n      \"id\": 1,\n      \"name\": \"Dogs\"\n    },\n    \"photoUrls\": [\"string\"],\n    \"tags\": [\n      {\n        \"id\": 0,\n        \"name\": \"string\"\n      },\n        \"id\": 1,\n        \"name\" \"test\"\n      }\n    ],\n    \"status\": \"sold\"\n  }"
+				},
+				"url": {
+					"raw": "127.0.0.1:3000/pet/10",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"pet",
+						"10"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
