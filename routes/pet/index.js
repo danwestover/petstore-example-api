@@ -2,52 +2,49 @@
 const fastify = require("fastify")();
 fastify.register(require("@fastify/sensible"));
 
-const pets = require("../../data/pets.json");
+let pets = require("../../data/pets.json");
 
 module.exports = async function (fastify, opts) {
   // add a new pet to the store
   fastify.post("/", async function (request, reply) {
-    // 200 - success
-    // 405 - invalid input
-    return "this is a pet";
+    const newPet = JSON.parse(request.body);
+    for (let pet of pets) {
+      if (newPet.id == pet.id) {
+        console.log(pets);
+        reply.statusCode = 409;
+        reply.send(`Pet with id ${newPet.id} already exists.`);
+        return;
+      }
+    }
+    pets.push(newPet);
+
+    return pets;
   });
 
   // update an existing pet
-  fastify.put("/", async function (request, reply) {
-    // 200 - success
-    // 400 - invalid ID
-    // 404 - pet not found
-    // 405 - validation exception
-    return "this is a pet";
-  });
-
-  // find pets by status
-  fastify.get("/findByStatus", async function (request, reply) {
-    const { status } = request.query;
-    // 200 success
-    // 400 invalid status value
-    return status;
-  });
-
-  // find pets by tags
-  fastify.get("/findByTags", async function (request, reply) {
-    // 200 success
-    // 400 invalid tag value
-    const { tags } = request.query;
-    return [tags.split(",")];
-  });
-
-  // update pet with form data
-  fastify.post("/:petId", async function (request, reply) {
-    // 405 invalid input
+  fastify.put("/:petId", async function (request, reply) {
     const { petId } = request.params;
-    return petId;
+    const petNewInfo = JSON.parse(request.body);
+
+    if (petId.match(/^[0-9]+$/) == null) {
+      reply.statusCode = 400;
+      reply.send("invalid pet ID");
+      return;
+    }
+
+    let updatePet = pets.findIndex((pet) => pet.id == petId);
+
+    if (updatePet < 0) {
+      reply.statusCode = 404;
+      reply.send("Pet not found");
+    }
+
+    pets[updatePet] = petNewInfo;
+    return petNewInfo;
   });
 
   // get pet by id
   fastify.get("/:petId", async function (request, reply) {
-    // 400 invalid ID
-    // 404 pet not found
     const { petId } = request.params;
 
     console.log(typeof petId);
@@ -71,6 +68,21 @@ module.exports = async function (fastify, opts) {
   // delete pet by id
   fastify.delete("/:petId", async function (request, reply) {
     const { petId } = request.params;
-    return petId;
+
+    if (pets.length == 0) {
+      reply.send("No pets to delete.");
+    }
+
+    if (!pets.find((pet) => pet.id == petId)) {
+      reply.statusCode = 400;
+      reply.send("Invalid pet value");
+    }
+
+    pets = pets.filter((pet) => {
+      if (pet.id != petId) {
+        return pet;
+      }
+    });
+    return pets;
   });
 };
